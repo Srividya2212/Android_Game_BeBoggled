@@ -218,6 +218,7 @@ public class SetUpServerClient extends ActionBarActivity implements View.OnClick
                             }
                         }
                     } else if(readMessage.equals("BBReady")) {
+                        Toast.makeText(context, "Opponent Ready", Toast.LENGTH_SHORT).show();
                             if (CommManagerMulti.isServerWaiting()) {
                                 Toast.makeText(context, "Start", Toast.LENGTH_SHORT).show();
                                 try {
