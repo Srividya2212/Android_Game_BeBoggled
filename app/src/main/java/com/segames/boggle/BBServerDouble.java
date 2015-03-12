@@ -169,6 +169,8 @@ public class BBServerDouble implements GlobalConstants{
         this.allGuessedWords.clear();
         this.guessedWordsP1.clear();
         this.guessedWordsP2.clear();
+        this.getGuessedWordsP1List().clear();
+        this.getGuessedWordsP2List().clear();
         this.setGameScoreP1(0);
         this.setGameScoreP2(0);
         this.updateGameRound();

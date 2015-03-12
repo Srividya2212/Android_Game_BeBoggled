@@ -44,7 +44,8 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".Scorecard"
-            android:label="@string/title_activity_scorecard" >
+            android:label="@string/title_activity_scorecard"
+            android:screenOrientation="portrait">
         </activity>
     </application>
 

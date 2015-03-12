@@ -200,42 +200,34 @@ public class SetUpServerClient extends ActionBarActivity implements View.OnClick
                     String readMessage = new String(readBuf, 0, msg.arg1);
                     Log.v(TAG,"Me: " + readMessage);
                     if(readMessage.length() >= BBMinGridLen){
-                        Toast.makeText(context, readMessage, Toast.LENGTH_SHORT).show();
-                        try{
-
+                        //Toast.makeText(context, readMessage, Toast.LENGTH_SHORT).show();
+                        if(DoublePlayerCut.created == true){
                             CommManagerMulti.setMultiGrid(readMessage);
-                            DoublePlayer.timerStart(1650);
+                            DoublePlayerCut.timerStart(1650);
                             //DoublePlayer.synchroStart();
                         }
-                        catch(NullPointerException e1){
-                            try{
+                        else if (DoublePlayer.created == true){
                                 CommManagerMulti.setMultiGrid(readMessage);
-                                DoublePlayerCut.timerStart(1650);
+                                DoublePlayer.timerStart(1650);
                                 //DoublePlayer.synchroStart();
                             }
-                            catch(NullPointerException e2){
-                                System.out.println("SynchroStart error");
-                            }
-                        }
                     } else if(readMessage.equals("BBReady")) {
                         Toast.makeText(context, "Opponent Ready", Toast.LENGTH_SHORT).show();
                             if (CommManagerMulti.isServerWaiting()) {
                                 Toast.makeText(context, "Start", Toast.LENGTH_SHORT).show();
-                                try {
+                                if(DoublePlayerCut.created == true) {
                                     CommManagerMulti.setMultiGrid(readMessage);
                                     DoublePlayerCut.timerStart(5000);
                                     //DoublePlayer.synchroStart();
-                                } catch (NullPointerException e1) {
-                                    try {
+                                }
+                                else if (DoublePlayer.created == true) {
                                         //Toast.makeText(context, readMessage, Toast.LENGTH_SHORT).show();
                                         CommManagerMulti.setMultiGrid(readMessage);
                                         DoublePlayer.timerStart(5000);
                                         //DoublePlayer.synchroStart();
-                                    } catch (NullPointerException e2) {
-                                        System.out.println("SynchroStart error");
                                     }
-                                }
                             } else { // Set the client ready status
+                                Toast.makeText(context, "Opponent Ready", Toast.LENGTH_SHORT).show();
                                 CommManagerMulti.setClientReadyStatus(true);
                             }
                     } else {

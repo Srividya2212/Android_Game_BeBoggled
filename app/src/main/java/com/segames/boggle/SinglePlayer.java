@@ -51,7 +51,7 @@ public class SinglePlayer extends ActionBarActivity implements View.OnClickListe
     static int game_boardSize=4;
     //Adding test comment
     //Counter variables
-    private final long startTime = BBGameTime * 1000;
+    private final long startTime = BBSingleGameTime * 1000;
     private final long interval = 1 * 1000;
     private CountDownTimer countDownTimer;
 

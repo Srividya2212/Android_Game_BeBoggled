@@ -44,6 +44,8 @@ public class DoublePlayerCut extends ActionBarActivity implements View.OnClickLi
     private final long interval = 1 * 1000;
     private static CountDownTimer countDownTimer;
 
+    public static boolean created = false;
+
 
     //Game state variables
     static boolean gameInProgress = false;
@@ -119,6 +121,8 @@ public class DoublePlayerCut extends ActionBarActivity implements View.OnClickLi
         numRounds = getIntent().getExtras().getInt("Round");
         score = getIntent().getExtras().getInt("Score");
         role = getIntent().getExtras().getInt("Role");
+        created = true;
+
         //System.out.println("Role: "+role);
 
         //Log.v("Round",Integer.toString(numRounds));
@@ -181,7 +185,7 @@ public class DoublePlayerCut extends ActionBarActivity implements View.OnClickLi
         if(selection.length() >= BBMinWordLength) {
             gameboard.opaqueButtons(getResources().getDrawable(R.drawable.whitedie));
             int tempscore = wordscore(selection);
-            if (tempscore == -888 || tempscore > 0) {
+            if (tempscore > 0) {
                 MediaPlayer mp = MediaPlayer.create(this,R.raw.glass_ping);
                 mp.start();
                 my_list = my_list.concat(selection+"\n");
@@ -307,7 +311,7 @@ public class DoublePlayerCut extends ActionBarActivity implements View.OnClickLi
 
         if(!gameInProgress){
             if(role == ClientRole) {
-                Toast toast = Toast.makeText(getApplicationContext(), "Waiting for Server",
+                Toast toast = Toast.makeText(getApplicationContext(), "Waiting for Opponent",
                         Toast.LENGTH_SHORT);
                 toast.show();
                 CommManagerMulti.SendServer("message", "BBReady");
@@ -337,6 +341,7 @@ public class DoublePlayerCut extends ActionBarActivity implements View.OnClickLi
 
     void initializeBoardButtons()
     {
+
         //find buttons
         gameboard.buttons[0][0]= (Button) findViewById(R.id.button_0);
         gameboard.buttons[0][1]= (Button) findViewById(R.id.button_1);
@@ -401,6 +406,7 @@ public class DoublePlayerCut extends ActionBarActivity implements View.OnClickLi
 
             @Override
             public void onAnimationEnd(Animation animation) {
+                findViewById(R.id.overlaywait).setVisibility(View.GONE);
                 if (role == ServerRole) {
                     gameboard.setGameboard(gridstr);
                     gameboardset = true;
@@ -446,6 +452,7 @@ public class DoublePlayerCut extends ActionBarActivity implements View.OnClickLi
                 shakeGrid(gameboard.size*gameboard.size);
                 button_submit.setVisibility(View.GONE);
                 findViewById(R.id.overlay).setVisibility(View.GONE);
+                findViewById(R.id.overlaywait).setVisibility(View.VISIBLE);
             }
         });
     }
@@ -490,6 +497,7 @@ public class DoublePlayerCut extends ActionBarActivity implements View.OnClickLi
                 //startNewGame();
                 current_button.setVisibility(View.GONE);
                 findViewById(R.id.overlay).setVisibility(View.GONE);
+                findViewById(R.id.overlaywait).setVisibility(View.VISIBLE);
                 break;
             default:
                 if(gameInProgress && gameboard.isvalidclick(current_button.getId())) {
@@ -562,6 +570,7 @@ public class DoublePlayerCut extends ActionBarActivity implements View.OnClickLi
                 scoreIntent.putExtra("Role", role);
                 gameInProgress = false;
                 gameboardset = false;
+                created = false;
                 startActivity(scoreIntent);
             }
         }

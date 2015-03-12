@@ -73,10 +73,12 @@ public class CommManagerMulti implements GlobalConstants {
     // Empty until the shake occurs from the Server. Only used by the client
     public static String getGridFromServer(int round, int role, int level, int mode, Context context) {
 
-        BBWords1 = new BBWords(context);
-        BBServerDouble1 = new BBServerDouble(mode,level,BBWords1);
 
-        if(round == 1){}
+
+
+        if(round == 1){
+            BBWords1 = new BBWords(context);
+            BBServerDouble1 = new BBServerDouble(mode,level,BBWords1);}
         else{BBServerDouble1.newRound();}
 
         // TODO - this should probably use a synchronous function to update multi_grid_str
